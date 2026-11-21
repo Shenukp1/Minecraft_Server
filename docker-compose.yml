@@ -1,0 +1,31 @@
+services:
+  minecraft:
+    image: itzg/minecraft-server:latest
+    pull_policy: daily
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    ports:
+      - "25565:25565"
+    environment:
+      EULA: "TRUE"
+      TYPE: "VANILLA" # Use PAPER for plugins or FABRIC for mods
+      VERSION: "LATEST" # Pin e.g. "1.21.11" to avoid automatic world upgrades
+      DIFFICULTY: "normal"
+      HARDCORE: "false"
+      MODE: "survival"
+      ENABLE_WHITELIST: "true"
+      ENFORCE_WHITELIST: "true" # Kick online players who aren't whitelisted
+      WHITELIST: "TechNoBuddy1"
+      OPS: "TechNoBuddy1"
+      # PLUGINS: |          # Plugin URLs, one per line (needs TYPE: PAPER)
+      # MODRINTH_PROJECTS: | # Modrinth slugs, one per line (PAPER or FABRIC)
+    volumes:
+      - /hdd/games/minecraft:/data
+
+  playit:
+    image: ghcr.io/playit-cloud/playit-agent:1.0
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      SECRET_KEY: ${PLAYIT_SECRET_KEY:?PLAYIT_SECRET_KEY must be set in .env}
