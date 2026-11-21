@@ -10,13 +10,14 @@ services:
     environment:
       EULA: "TRUE"
       TYPE: "VANILLA" # Use PAPER for plugins or FABRIC for mods
-      VERSION: "26.60" # Pin e.g. "1.21.11" to avoid automatic world upgrades
+      VERSION: "26.3" # Pin e.g. "1.21.11" to avoid automatic world upgrades
       DIFFICULTY: "normal"
       HARDCORE: "false"
       MODE: "survival"
       ENABLE_WHITELIST: "true"
       ENFORCE_WHITELIST: "true" # Kick online players who aren't whitelisted
-      WHITELIST: ${MC_WHITELIST:?MC_WHITELIST must be set in .env} # comma-separated usernames
+      
+      WHITELIST: ${MC_WHITELIST:-} # comma-separated usernames or WHITELIST: ${MC_WHITELIST:?MC_WHITELIST must be set in .env}
       OPS: ${MC_OPS:-}
       # PLUGINS: |          # Plugin URLs, one per line (needs TYPE: PAPER)
       # MODRINTH_PROJECTS: | # Modrinth slugs, one per line (PAPER or FABRIC)
