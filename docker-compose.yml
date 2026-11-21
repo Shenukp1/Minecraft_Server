@@ -10,14 +10,14 @@ services:
     environment:
       EULA: "TRUE"
       TYPE: "VANILLA" # Use PAPER for plugins or FABRIC for mods
-      VERSION: "LATEST" # Pin e.g. "1.21.11" to avoid automatic world upgrades
+      VERSION: "26.60" # Pin e.g. "1.21.11" to avoid automatic world upgrades
       DIFFICULTY: "normal"
       HARDCORE: "false"
       MODE: "survival"
       ENABLE_WHITELIST: "true"
       ENFORCE_WHITELIST: "true" # Kick online players who aren't whitelisted
-      WHITELIST: "TechNoBuddy1"
-      OPS: "TechNoBuddy1"
+      WHITELIST: ${MC_WHITELIST:?MC_WHITELIST must be set in .env} # comma-separated usernames
+      OPS: ${MC_OPS:-}
       # PLUGINS: |          # Plugin URLs, one per line (needs TYPE: PAPER)
       # MODRINTH_PROJECTS: | # Modrinth slugs, one per line (PAPER or FABRIC)
     volumes:
@@ -28,4 +28,5 @@ services:
     network_mode: host
     restart: unless-stopped
     environment:
+      # NOTE(shenukp1) Nov 19, 2026: `:?` allows you to write an error text when the variable is not set or empty
       SECRET_KEY: ${PLAYIT_SECRET_KEY:?PLAYIT_SECRET_KEY must be set in .env}
